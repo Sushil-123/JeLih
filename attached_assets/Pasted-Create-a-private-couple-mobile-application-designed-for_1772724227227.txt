@@ -1,0 +1,92 @@
+Create a private couple mobile application designed for long-distance relationships.
+
+The app must prioritize privacy, offline functionality, and local-first data storage. 
+Most data should be stored on the device using local databases, and communication 
+between devices should be end-to-end encrypted.
+
+Core Requirements:
+
+1. Technology
+- Use Flutter for cross-platform mobile development.
+- Use SQLite or Hive for local storage.
+- Use a minimal Node.js backend only for message relay and notifications.
+- Implement WebSocket communication for real-time messaging.
+- Implement end-to-end encryption using AES for message content and public/private key exchange.
+
+2. App Concept
+This app is a private digital space for two partners in a long-distance relationship. 
+It combines messaging, memories, future messages, and relationship tracking.
+
+3. Features
+
+Private Chat
+- Real-time messaging between two users
+- End-to-end encrypted messages
+- Messages stored locally first then synced
+- Text messages, photo messages, and voice messages
+- Emoji reactions
+- Message timestamps
+- Message status (sent, delivered, read)
+
+Offline Mode
+- Messages written offline should be stored locally
+- Messages automatically sync when internet is available
+
+Memories Section
+- Users can store photos, notes, and voice recordings
+- Timeline view of shared memories
+- Random “Memory of the Day”
+
+Future Messages
+- Schedule messages to unlock at a specific date
+Example: “Open on Valentine’s Day”
+
+Relationship Timeline
+- Track important dates (first meeting, anniversary)
+- Countdown until next meeting
+- Days since relationship started
+
+Mood Sharing
+- Each user can share daily mood (happy, sad, tired, excited)
+- Mood history view
+
+Security
+- Biometric authentication (fingerprint/face unlock)
+- App PIN lock
+- Encrypted local database
+- Screenshot protection
+- Hidden mode for privacy
+
+Media Storage
+- Store photos and voice notes in secure device storage
+- Save file paths in the local database
+
+Database Design
+Include tables for:
+- users
+- messages
+- media
+- reactions
+- memories
+- scheduled_messages
+
+User Interface
+- Romantic minimal UI design
+- Dark theme with soft accent colors
+- Modern chat bubbles
+- Smooth animations
+- Clean and simple navigation
+
+Architecture
+- Local-first architecture
+- Offline-first message handling
+- Secure encrypted communication
+- Modular clean code structure
+
+Deliverables
+- Full app architecture
+- Folder structure
+- Database schema
+- Example API endpoints
+- Flutter UI screen layout
+- Example encryption implementation
