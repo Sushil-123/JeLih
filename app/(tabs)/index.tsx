@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useRef } from "react";
 import {
   FlatList,
   View,
@@ -34,10 +34,7 @@ function Header() {
 
   return (
     <View style={styles.header}>
-      <LinearGradient
-        colors={["#0C0811", "#120B18"]}
-        style={StyleSheet.absoluteFill}
-      />
+      <LinearGradient colors={["#0C0811", "#120B18"]} style={StyleSheet.absoluteFill} />
       <View style={styles.headerAvatar}>
         <LinearGradient colors={[Colors.accent, "#C24060"]} style={styles.avatarGradient}>
           <Text style={styles.avatarText}>{partnerName.charAt(0).toUpperCase()}</Text>
@@ -122,21 +119,26 @@ export default function ChatScreen() {
   const insets = useSafeAreaInsets();
   const { deviceId } = useApp();
   const { messages, sendMessage, markRead } = useChat();
+  const listRef = useRef<FlatList<Message>>(null);
 
   useEffect(() => {
     markRead();
   }, [messages.length, markRead]);
 
-  const reversedMessages = [...messages].reverse();
+  const scrollToBottom = useCallback(() => {
+    if (messages.length > 0) {
+      listRef.current?.scrollToEnd({ animated: false });
+    }
+  }, [messages.length]);
 
   const renderItem = useCallback(
     ({ item, index }: { item: Message; index: number }) => {
       const isMine = item.senderId === deviceId;
-      const olderMsg = reversedMessages[index + 1];
+      const prevMsg = index > 0 ? messages[index - 1] : undefined;
       const showDate =
-        !olderMsg ||
+        !prevMsg ||
         new Date(item.timestamp).toDateString() !==
-          new Date(olderMsg.timestamp).toDateString();
+          new Date(prevMsg.timestamp).toDateString();
 
       return (
         <View>
@@ -145,7 +147,7 @@ export default function ChatScreen() {
         </View>
       );
     },
-    [deviceId, reversedMessages]
+    [deviceId, messages]
   );
 
   return (
@@ -153,14 +155,15 @@ export default function ChatScreen() {
       <Header />
       <KeyboardAvoidingView style={styles.flex} behavior="padding" keyboardVerticalOffset={0}>
         <FlatList
-          data={reversedMessages}
+          ref={listRef}
+          data={messages}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
-          inverted
           contentContainerStyle={styles.listContent}
           keyboardDismissMode="interactive"
           keyboardShouldPersistTaps="handled"
-          scrollEnabled={!!messages.length}
+          onContentSizeChange={scrollToBottom}
+          onLayout={scrollToBottom}
           ListEmptyComponent={<EmptyChat />}
           showsVerticalScrollIndicator={false}
         />
