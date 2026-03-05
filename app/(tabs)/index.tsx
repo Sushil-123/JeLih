@@ -159,6 +159,7 @@ export default function ChatScreen() {
           data={messages}
           keyExtractor={(item) => item.id}
           renderItem={renderItem}
+          style={styles.flex}
           contentContainerStyle={styles.listContent}
           keyboardDismissMode="interactive"
           keyboardShouldPersistTaps="handled"
@@ -167,7 +168,7 @@ export default function ChatScreen() {
           ListEmptyComponent={<EmptyChat />}
           showsVerticalScrollIndicator={false}
         />
-        <View style={{ paddingBottom: Platform.OS === "web" ? 34 : insets.bottom }}>
+        <View style={{ paddingBottom: Platform.OS === "web" ? 84 : insets.bottom + 49 }}>
           <ChatInput onSend={sendMessage} />
         </View>
       </KeyboardAvoidingView>
